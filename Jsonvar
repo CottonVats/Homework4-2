@@ -1,0 +1,19 @@
+import json
+from collections import Counter
+words_list = []
+with open('newsafr', encoding='utf-8') as newsfile:
+    news_afr = json.load(newsfile)
+    all = news_afr.get('rss')
+    chan = all.get('channel')
+    items = chan.get('items')
+    for news_dict in items:
+        description = news_dict.get("description")
+        words_list.extend(description.split())
+for word in words_list:
+    if len(word) <= 6:
+        words_list.remove(word)
+counted_words = Counter(tuple(words_list))
+print("Чаще всего встречаются слова:")
+for word, number in counted_words:
+    for i in range(0,10):
+        print(word)
